@@ -1,0 +1,94 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "platformer-level-1.tmx",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "fileStates": {
+        "": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "//wsl.localhost/Ubuntu/home/andrewbyi/CMPM120/Game 3/Game/assets/platformer-level-1.tmx": {
+            "scale": 1.1558333333333333,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 359.91348233597694,
+                "y": 180.3893294881038
+            }
+        },
+        "//wsl.localhost/Ubuntu/home/andrewbyi/CMPM120/Game 3/Game/assets/platformer-level-1.tmx#Black-White": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "//wsl.localhost/Ubuntu/home/andrewbyi/CMPM120/Game 3/Game/assets/platformer-level-1.tmx#kenny_tilemap_packed": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "platformer-level-1.tmx": {
+            "expandedObjectLayers": [
+                3,
+                5
+            ],
+            "scale": 0.9672,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 360.8354011579818,
+                "y": 148.36641852770884
+            }
+        },
+        "platformer-level-1.tmx#kenny_tilemap_packed": {
+            "scaleInDock": 1
+        },
+        "platformer-level-1.tmx#tilemap_packed2": {
+            "scaleInDock": 1
+        },
+        "platformer-level-2.tmx": {
+            "expandedObjectLayers": [
+                7,
+                5
+            ],
+            "scale": 1,
+            "selectedLayer": 4,
+            "viewCenter": {
+                "x": 863,
+                "y": 369.5
+            }
+        },
+        "platformer-level-2.tmx#Black-White": {
+            "scaleInDock": 1
+        },
+        "platformer-level-2.tmx#tilemap-packed": {
+            "scaleInDock": 1
+        },
+        "platformer-level-2.tmx#tilemap-packed2": {
+            "scaleInDock": 1
+        }
+    },
+    "last.exportedFilePath": "//wsl.localhost/Ubuntu/home/andrewbyi/CMPM120/Game 3/Game/assets",
+    "last.imagePath": "//wsl.localhost/Ubuntu/home/andrewbyi/CMPM120/Game 3/Game/assets",
+    "map.height": 40,
+    "map.lastUsedExportFilter": "JSON map files (*.tmj *.json)",
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 18,
+    "map.tileWidth": 18,
+    "map.width": 55,
+    "openFiles": [
+        "platformer-level-1.tmx",
+        "platformer-level-2.tmx"
+    ],
+    "project": "platformer-level-2.tiled-project",
+    "property.type": "bool",
+    "recentFiles": [
+        "platformer-level-2.tmx",
+        "platformer-level-1.tmx"
+    ],
+    "tileset.embedInMap": true,
+    "tileset.tileSize": {
+        "height": 18,
+        "width": 18
+    }
+}

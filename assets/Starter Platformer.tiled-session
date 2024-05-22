@@ -1,0 +1,64 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "//wsl.localhost/Ubuntu/home/andrewbyi/CMPM120/Game 3/Game/assets/platformer-level-1.tmx",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "file.lastUsedOpenFilter": "All Files (*)",
+    "fileStates": {
+        "": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "//wsl.localhost/Ubuntu/home/andrewbyi/CMPM120/Game 3/Game/assets/platformer-level-1.tmx": {
+            "scale": 1.5,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 160.66666666666666,
+                "y": 184.33333333333331
+            }
+        },
+        "//wsl.localhost/Ubuntu/home/andrewbyi/CMPM120/Game 3/Game/assets/platformer-level-1.tmx#Black-White": {
+            "scaleInDock": 1
+        },
+        "//wsl.localhost/Ubuntu/home/andrewbyi/CMPM120/Game 3/Game/assets/platformer-level-1.tmx#kenny_tilemap_packed": {
+            "scaleInDock": 1
+        },
+        "platformer-level-1.tmx": {
+            "scale": 0.7639583333333333,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 339.6782110717208,
+                "y": 203.54513226070367
+            }
+        },
+        "platformer-level-1.tmx#kenny_tilemap_packed": {
+            "scaleInDock": 1
+        }
+    },
+    "last.exportedFilePath": "//wsl.localhost/Ubuntu/home/andrewbyi/CMPM120/S6 ⭐ Starter Platformer/StarterPlatformer/assets",
+    "last.imagePath": "//wsl.localhost/Ubuntu/home/andrewbyi/CMPM120/Game 3/Game/assets",
+    "map.height": 40,
+    "map.lastUsedExportFilter": "JSON map files (*.tmj *.json)",
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 18,
+    "map.tileWidth": 18,
+    "map.width": 55,
+    "openFiles": [
+        "//wsl.localhost/Ubuntu/home/andrewbyi/CMPM120/Game 3/Game/assets/platformer-level-1.tmx"
+    ],
+    "project": "Starter Platformer.tiled-project",
+    "property.type": "bool",
+    "recentFiles": [
+        "//wsl.localhost/Ubuntu/home/andrewbyi/CMPM120/Game 3/Game/assets/platformer-level-1.tmx",
+        "platformer-level-1.tmx"
+    ],
+    "tileset.embedInMap": true,
+    "tileset.tileSize": {
+        "height": 18,
+        "width": 18
+    }
+}
