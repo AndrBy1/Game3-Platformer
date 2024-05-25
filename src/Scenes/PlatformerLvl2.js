@@ -14,6 +14,7 @@ class PlatformerLvl2 extends Phaser.Scene {
         this.checkpoint = false;
         this.textDuration = 90;
         this.frame = 0;
+        this.secondJump = false;
         
     }
 
@@ -68,6 +69,7 @@ class PlatformerLvl2 extends Phaser.Scene {
         // set up player avatar
         my.sprite.player = this.physics.add.sprite(this.SpawnPoint[0].x, this.SpawnPoint[0].y, "platformer_characters", "tile_0002.png");
         my.sprite.player.setCollideWorldBounds(true);
+        my.sprite.player.body.maxVelocity.x = 250;
 
         this.doorTxt = this.add.bitmapText(this.door[0].x - 15, this.door[0].y - 25, 'Ariel', "Door");
         this.doorTxt.setScale(0.3);
@@ -167,6 +169,27 @@ class PlatformerLvl2 extends Phaser.Scene {
         return true;
     }
 
+    twoJump(){
+        if(doubleJump == true && this.secondJump == true){
+            if(!my.sprite.player.body.blocked.down && Phaser.Input.Keyboard.JustDown(cursors.up)){
+                my.sprite.player.body.setVelocityY(this.JUMP_VELOCITY);
+
+                this.sound.play("jumpsound");
+
+                my.vfx.jumping.startFollow(my.sprite.player, my.sprite.player.displayWidth/2-10, my.sprite.player.displayHeight/2-5, false);
+                my.vfx.jumping.setParticleSpeed(this.PARTICLE_VELOCITY, 0);
+                if (my.sprite.player.body.blocked.down) {
+                    my.vfx.jumping.start();
+                }
+                this.secondJump = false;
+            }
+        }
+        if(my.sprite.player.body.blocked.down){
+            this.secondJump = true;
+        }
+    }
+
+
     update() {
         this.frame++;
         this.coinTxt.setText("Score: " + coinScore);
@@ -239,17 +262,21 @@ class PlatformerLvl2 extends Phaser.Scene {
         {
             my.vfx.jumping.stop();
         }
+        if(doubleJump == true){
+            this.twoJump();
+        }
         if(my.sprite.player.y >= 720){
             console.log("death");
             if(this.checkpoint == true){
                 my.sprite.player.x = this.respawn[0].x;
                 my.sprite.player.y = this.respawn[0].y - 50;
+                my.sprite.player.setVelocity(0, 0);
             }
             else{
                 this.physics.world.gravity.y = 0;
                 my.sprite.player.x = this.SpawnPoint[0].x;
                 my.sprite.player.y = this.SpawnPoint[0].y - 50;
-                
+                my.sprite.player.setVelocity(0, 0);
             }
             this.physics.world.gravity.y = 1500;
         }

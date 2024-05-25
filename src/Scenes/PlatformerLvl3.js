@@ -14,6 +14,7 @@ class PlatformerLvl3 extends Phaser.Scene {
         this.checkpoint = false;
         this.textDuration = 90;
         this.frame = 0;
+        this.secondJump = false;
 
     }
 
@@ -32,7 +33,6 @@ class PlatformerLvl3 extends Phaser.Scene {
         this.backgroundLayer = this.map.createLayer("background", this.tileset2, 0, 0);
         this.groundLayer = this.map.createLayer("Ground-n-Platforms", this.tileset, 0, 0);
         
-
         // Make it collidable
         this.groundLayer.setCollisionByProperty({
             collides: true
@@ -42,6 +42,12 @@ class PlatformerLvl3 extends Phaser.Scene {
             name: "coin",
             key: "tilemap_sheet",
             frame: 151
+        });
+
+        this.power = this.map.createFromObjects("Collectables", {
+            name: "powerup",
+            key: "tilemap_sheet",
+            frame: 67
         });
 
         this.SpawnPoint = this.map.createFromObjects("Spawn", {
@@ -70,12 +76,18 @@ class PlatformerLvl3 extends Phaser.Scene {
 
         this.physics.world.enable(this.coins, Phaser.Physics.Arcade.STATIC_BODY);
         this.physics.world.enable(this.drowned, Phaser.Physics.Arcade.STATIC_BODY);
+        this.physics.world.enable(this.power, Phaser.Physics.Arcade.STATIC_BODY);
+        
+        
         this.coinGroup = this.add.group(this.coins);
         this.drownGroup = this.add.group(this.drowned);
 
         // set up player avatar
         my.sprite.player = this.physics.add.sprite(this.SpawnPoint[0].x, this.SpawnPoint[0].y, "platformer_characters", "tile_0001.png");
         my.sprite.player.setCollideWorldBounds(false);
+        my.sprite.player.body.maxVelocity.x = 250;
+
+        this.movable = this.physics.add.sprite
 
         this.doorTxt = this.add.bitmapText(this.door[0].x - 15, this.door[0].y - 25, 'Ariel', "Door");
         this.doorTxt.setScale(0.3);
@@ -92,7 +104,6 @@ class PlatformerLvl3 extends Phaser.Scene {
 
         // Enable collision handling
         this.physics.add.collider(my.sprite.player, this.groundLayer);
-
         
         this.physics.add.overlap(my.sprite.player, this.coinGroup, (obj1, obj2) => {
             obj2.destroy(); // remove coin on overlap
@@ -103,7 +114,18 @@ class PlatformerLvl3 extends Phaser.Scene {
             
         });
 
+        this.physics.add.overlap(my.sprite.player, this.power, (obj1, obj2) => {
+            this.powerTxt = this.add.bitmapText(obj2.x, obj2.y, 'Ariel', "You just got the Double Jump!\n press jump while in midair!");
+            this.powerTxt.setScale(0.3);
+            obj2.destroy();
+            doubleJump = true;
+            my.vfx.powerup.start();
+            my.vfx.powerup.startFollow(obj2, obj2.displayWidth/2-10, obj2.displayHeight/2-5, false);
+            my.vfx.powerup.setParticleSpeed(this.PARTICLE_VELOCITY, 0);
+        });
+
         this.physics.add.overlap(my.sprite.player, this.drownGroup, (obj1, obj2) => {
+            
             this.respawnPlayer();
         });
 
@@ -158,8 +180,23 @@ class PlatformerLvl3 extends Phaser.Scene {
             gravityY: -400,
             alpha: {start: 1, end: 0.1}, 
         });
-
         my.vfx.jumping.stop();
+
+        my.vfx.powerup = this.add.particles(0, 0, "kenny-particles", {
+            //'spark_01.png', 'spark_02.png', 'spark_03.png', 'spark_04.png', 
+            frame: ['spark_05.png', 'spark_06.png'],
+            duration: 90,
+            // TODO: Try: add random: true
+            addRandom: true,
+            scale: {start: 0.03, end: 0.1},
+            // TODO: Try: maxAliveParticles: 8,
+            maxAliveParticles: 10,
+            lifespan: 350,
+            // TODO: Try: gravityY: -400,
+            gravityY: -400,
+            alpha: {start: 1, end: 0.1}, 
+        });
+        my.vfx.powerup.stop();
 
         this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
         this.cameras.main.startFollow(my.sprite.player, true, 0.25, 0.25); // (target, [,roundPixels][,lerpX][,lerpY])
@@ -178,17 +215,37 @@ class PlatformerLvl3 extends Phaser.Scene {
         return true;
     }
 
+    twoJump(){
+        if(doubleJump == true && this.secondJump == true){
+            if(!my.sprite.player.body.blocked.down && Phaser.Input.Keyboard.JustDown(cursors.up)){
+                my.sprite.player.body.setVelocityY(this.JUMP_VELOCITY);
+
+                this.sound.play("jumpsound");
+
+                my.vfx.jumping.startFollow(my.sprite.player, my.sprite.player.displayWidth/2-10, my.sprite.player.displayHeight/2-5, false);
+                my.vfx.jumping.setParticleSpeed(this.PARTICLE_VELOCITY, 0);
+                if (my.sprite.player.body.blocked.down) {
+                    my.vfx.jumping.start();
+                }
+                this.secondJump = false;
+            }
+        }
+        if(my.sprite.player.body.blocked.down){
+            this.secondJump = true;
+        }
+    }
+
     respawnPlayer(){
         console.log("death");
         if(this.checkpoint == true){
             my.sprite.player.x = this.respawn[0].x;
             my.sprite.player.y = this.respawn[0].y - 70;
-            
+            my.sprite.player.setVelocity(0, 0);
         }
         else{
             my.sprite.player.x = this.SpawnPoint[0].x;
             my.sprite.player.y = this.SpawnPoint[0].y - 70;
-            
+            my.sprite.player.setVelocity(0, 0);
         }
         this.physics.world.gravity.y = 1500;
     }
@@ -260,6 +317,9 @@ class PlatformerLvl3 extends Phaser.Scene {
         else
         {
             my.vfx.jumping.stop();
+        }
+        if(doubleJump == true){
+            this.twoJump();
         }
         if(my.sprite.player.y >= 1600){
             this.respawnPlayer();

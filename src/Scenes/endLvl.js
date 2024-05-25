@@ -1,6 +1,6 @@
 class endLvl extends Phaser.Scene {
     constructor() {
-        super("platformerScene4");
+        super("platformerSceneF");
     }
 
     init() {
@@ -63,22 +63,31 @@ class endLvl extends Phaser.Scene {
         this.coinGroup = this.add.group(this.coins);
 
         // set up player avatar
-        my.sprite.player = this.physics.add.sprite(70, 70, "platformer_characters", "tile_0002.png");
+        my.sprite.player = this.physics.add.sprite(70, 70, "platformer_characters", "tile_0006.png");
+        my.sprite.friend1 = this.physics.add.sprite(40, 70, "platformer_characters", "tile_0004.png");
+        my.sprite.friend1.flipX = true;
+        my.sprite.friend2 = this.physics.add.sprite(100, 70, "platformer_characters", "tile_0002.png");
+        my.sprite.friend4 = this.physics.add.sprite(160, 70, "platformer_characters", "tile_0010.png");
+        my.sprite.friend5 = this.physics.add.sprite(190, 70, "platformer_characters", "tile_00012.png");
         my.sprite.player.setCollideWorldBounds(true);
 
-        this.coinTxt = this.add.bitmapText(my.sprite.player.x - 5, my.sprite.player.y - 10, 'Ariel', " Final coins score: " + coinScore);
+        this.coinTxt = this.add.bitmapText(120, 180, 'Ariel', " Final coins score: " + coinScore);
         this.coinTxt.setScale(0.3);
 
-        this.restartTxt = this.add.bitmapText(my.sprite.player.x - 5, my.sprite.player.y - 10, 'Ariel', "press R to restart");
+        this.restartTxt = this.add.bitmapText(120, 200, 'Ariel', "press R to restart");
         this.restartTxt.setScale(0.2);
 
-        this.endTxt = this.add.bitmapText(my.sprite.player.x - 5, my.sprite.player.y - 10, 'Ariel', "The End");
+        this.endTxt = this.add.bitmapText(20, 130, 'Ariel', "You found your friends!");
 
         my.sprite.player.setSize(18, 18);
         my.sprite.player.setOffset(3, 4);
 
         // Enable collision handling
         this.physics.add.collider(my.sprite.player, this.groundLayer);
+        this.physics.add.collider(my.sprite.friend1, this.groundLayer);
+        this.physics.add.collider(my.sprite.friend2, this.groundLayer);
+        this.physics.add.collider(my.sprite.friend4, this.groundLayer);
+        this.physics.add.collider(my.sprite.friend5, this.groundLayer);
 
         my.sprite.player.setSize(18, 18);
         
@@ -146,7 +155,6 @@ class endLvl extends Phaser.Scene {
         my.vfx.jumping.stop();
 
         this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
-        this.cameras.main.startFollow(my.sprite.player, true, 0.25, 0.25); // (target, [,roundPixels][,lerpX][,lerpY])
         this.cameras.main.setDeadzone(50, 50);
         this.cameras.main.setZoom(this.SCALE * 1.3);
         
@@ -154,15 +162,23 @@ class endLvl extends Phaser.Scene {
 
 
     update() {
-        this.coinTxt.y = my.sprite.player.y - 40;
-        this.endTxt.y = my.sprite.player.y - 80;
-        this.restartTxt.y = my.sprite.player.y - 20;
         if(this.startKey.isDown){
             stage = 0;
             coinScore = 0;
             doubleJump = false;
             secondJump = false;
             this.scene.start("platformerScene1");
+        }
+        if(my.sprite.player.body.blocked.down) {
+            // TODO: set a Y velocity to have the player "jump" upwards (negative Y direction)
+            my.sprite.player.body.setVelocityY(this.JUMP_VELOCITY);
+
+
+            my.vfx.jumping.startFollow(my.sprite.player, my.sprite.player.displayWidth/2-10, my.sprite.player.displayHeight/2-5, false);
+            my.vfx.jumping.setParticleSpeed(this.PARTICLE_VELOCITY, 0);
+            if (my.sprite.player.body.blocked.down) {
+                my.vfx.jumping.start();
+            }
         }
     }
 }

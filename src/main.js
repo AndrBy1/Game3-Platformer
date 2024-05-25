@@ -13,7 +13,6 @@
 let stage = 0;
 let coinScore = 0;
 let doubleJump = false;
-let secondJump = false;
 
 // game config
 let config = {
@@ -34,7 +33,7 @@ let config = {
     },
     width: 1050,
     height: 750,
-    scene: [Load, PlatformerLvl1, PlatformerLvl2, PlatformerLvl3, endLvl]
+    scene: [Load, PlatformerLvl1, PlatformerLvl2, PlatformerLvl3, PlatformerLvl4, endLvl]
 }
 
 var cursors;

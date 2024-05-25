@@ -1,6 +1,6 @@
-class PlatformerLvl1 extends Phaser.Scene {
+class PlatformerLvl4 extends Phaser.Scene {
     constructor() {
-        super("platformerScene1");
+        super("platformerScene4");
     }
 
     init() {
@@ -15,13 +15,13 @@ class PlatformerLvl1 extends Phaser.Scene {
         this.textDuration = 90;
         this.frame = 0;
         this.secondJump = false;
-
+        
     }
 
     create() {
         // Create a new tilemap game object which uses 18x18 pixel tiles, and is
         // 45 tiles wide and 25 tiles tall.
-        this.map = this.add.tilemap("platformer-level-1", 18, 18, 45, 25);
+        this.map = this.add.tilemap("platformer-level-4", 18, 18, 45, 25);
 
         // Add a tileset to the map
         // First parameter: name we gave the tileset in Tiled
@@ -68,24 +68,26 @@ class PlatformerLvl1 extends Phaser.Scene {
 
         // set up player avatar
         my.sprite.player = this.physics.add.sprite(this.SpawnPoint[0].x, this.SpawnPoint[0].y, "platformer_characters", "tile_0002.png");
-        my.sprite.player.setCollideWorldBounds(true);
+        my.sprite.player.setCollideWorldBounds(false);
         my.sprite.player.body.maxVelocity.x = 250;
-
-        this.coinTxt = this.add.bitmapText(my.sprite.player.x - 15, my.sprite.player.y - 10, 'Ariel', "coins: " + coinScore);
-        this.coinTxt.setScale(0.3);
 
         this.doorTxt = this.add.bitmapText(this.door[0].x - 15, this.door[0].y - 25, 'Ariel', "Door");
         this.doorTxt.setScale(0.3);
 
-        this.checkText = this.add.bitmapText(this.respawn[0].x -15, this.respawn[0].y-25, 'Ariel', "Checkpoint!");
+        this.coinTxt = this.add.bitmapText(my.sprite.player.x - 15, my.sprite.player.y - 10, 'Ariel', "coins: " + coinScore);
+        this.coinTxt.setScale(0.3);
+
+        this.checkText = this.add.bitmapText(this.respawn[0].x - 15, this.respawn[0].y- 10, 'Ariel', "Checkpoint!");
         this.checkText.setScale(0.3);
         this.checkText.visible = false;
 
         my.sprite.player.setSize(18, 18);
         my.sprite.player.setOffset(3, 4);
+
         // Enable collision handling
         this.physics.add.collider(my.sprite.player, this.groundLayer);
 
+        my.sprite.player.setSize(18, 18);
         
         this.physics.add.overlap(my.sprite.player, this.coinGroup, (obj1, obj2) => {
             obj2.destroy(); // remove coin on overlap
@@ -208,7 +210,9 @@ class PlatformerLvl1 extends Phaser.Scene {
             my.vfx.walking.startFollow(my.sprite.player, my.sprite.player.displayWidth/2-10, my.sprite.player.displayHeight/2-5, false);
             my.vfx.walking.setParticleSpeed(this.PARTICLE_VELOCITY, 0);
             if (my.sprite.player.body.blocked.down) {
+
                 my.vfx.walking.start();
+
             }
 
         } else if(cursors.right.isDown) {
@@ -224,7 +228,9 @@ class PlatformerLvl1 extends Phaser.Scene {
             my.vfx.walking.startFollow(my.sprite.player, my.sprite.player.displayWidth/2-10, my.sprite.player.displayHeight/2-5, false);
             my.vfx.walking.setParticleSpeed(this.PARTICLE_VELOCITY, 0);
             if (my.sprite.player.body.blocked.down) {
+
                 my.vfx.walking.start();
+
             }
 
         } else {
@@ -259,7 +265,7 @@ class PlatformerLvl1 extends Phaser.Scene {
         if(doubleJump == true){
             this.twoJump();
         }
-        if(my.sprite.player.y >= 700){
+        if(my.sprite.player.y >= 720){
             console.log("death");
             if(this.checkpoint == true){
                 my.sprite.player.x = this.respawn[0].x;
@@ -277,10 +283,9 @@ class PlatformerLvl1 extends Phaser.Scene {
         if(this.hit(my.sprite.player, this.respawn[0])){
             this.checkpoint = true;
             this.checkText.visible = true;
-            
         }
         if(this.hit(my.sprite.player, this.door[0])){
-            this.scene.start("platformerScene2");
+            this.scene.start("platformerSceneF");
             console.log("door touch");
         }
     }

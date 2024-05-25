@@ -15,6 +15,7 @@ class Load extends Phaser.Scene {
         this.load.tilemapTiledJSON("platformer-level-1", "platformer-level-1.tmj");   // Tilemap in JSON
         this.load.tilemapTiledJSON("platformer-level-2", "platformer-level-2.tmj");
         this.load.tilemapTiledJSON("platformer-level-3", "platformer-level-3.tmj");
+        this.load.tilemapTiledJSON("platformer-level-4", "platformer-level-4.tmj");
         this.load.tilemapTiledJSON("theEnd", "Platformer-end.tmj");
         this.load.multiatlas("kenny-particles", "kenny-particles.json");
         this.load.bitmapFont('Ariel', 'Font_0.png', 'Font.xml');
@@ -35,8 +36,8 @@ class Load extends Phaser.Scene {
             key: 'walk',
             frames: this.anims.generateFrameNames('platformer_characters', {
                 prefix: "tile_",
-                start: 2,
-                end: 3,
+                start: 6,
+                end: 7,
                 suffix: ".png",
                 zeroPad: 4
             }),
@@ -48,7 +49,7 @@ class Load extends Phaser.Scene {
             key: 'idle',
             defaultTextureKey: "platformer_characters",
             frames: [
-                { frame: "tile_0002.png" }
+                { frame: "tile_0006.png" }
             ],
             repeat: -1
         });
@@ -57,7 +58,7 @@ class Load extends Phaser.Scene {
             key: 'jump',
             defaultTextureKey: "platformer_characters",
             frames: [
-                { frame: "tile_0003.png" }
+                { frame: "tile_0007.png" }
             ],
         });
 
